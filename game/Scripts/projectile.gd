@@ -16,5 +16,5 @@ var speed: float
 func _on_collision_shape_2d_child_entered_tree(_node: Node) -> void:
 	# TODO: If collided with wall just set to dead
 	# TODO: If collided with player or boss, deal damage then set to dead
-	dead = true
-	
+	# dead = true
+	pass

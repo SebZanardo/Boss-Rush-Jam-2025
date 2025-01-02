@@ -24,6 +24,12 @@ func get_dir():
 	axis.x = int(Input.is_action_pressed("move_right")) - int(Input.is_action_pressed("move_left"))
 	axis.y = int(Input.is_action_pressed("move_down")) - int(Input.is_action_pressed("move_up"))
 	return axis.normalized()
+	
+# NOTE: Temporary for testing projectile system
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.pressed and event.button_index == 1:
+		var direction = position.direction_to(get_viewport().get_mouse_position())
+		projectile_manager.spawn_projectile(projectile_manager.ProjectileType.BASIC, position, direction)
 
 func _physics_process(delta: float) -> void:
 	var dir = get_dir()
