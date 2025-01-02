@@ -1,8 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://lkvwuu5h5kqs"]
+[gd_scene load_steps=4 format=3 uid="uid://lkvwuu5h5kqs"]
 
 [ext_resource type="PackedScene" uid="uid://qmow1xovt6bc" path="res://Scenes/Player/player.tscn" id="1_4xdpk"]
 [ext_resource type="Texture2D" uid="uid://b081a0rmen73n" path="res://Sprites/Tiles/test.png" id="1_w2vee"]
-[ext_resource type="Script" path="res://Scripts/Enemies/test_dummy.gd" id="2_qmky5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q5rtq"]
 size = Vector2(32, 32)
@@ -21,7 +20,6 @@ texture = ExtResource("1_w2vee")
 
 [node name="StaticBody2D2" type="StaticBody2D" parent="."]
 position = Vector2(232, 72)
-script = ExtResource("2_qmky5")
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]

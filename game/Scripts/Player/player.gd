@@ -15,8 +15,8 @@ func apply_friction(amount):
 	else:
 		velocity = Vector2.ZERO
 
-func apply_movement(acceleration):
-	velocity += acceleration
+func apply_movement(acc):
+	velocity += acc
 	velocity = velocity.limit_length(max_speed)
 
 func get_dir():
@@ -38,7 +38,7 @@ func _physics_process(delta: float) -> void:
 	
 	move_and_slide()
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	player_animator.flip_h = true if get_dir().x < 0 else false
 	if get_dir().x == 0:
 		player_animator.flip_h = true if get_global_mouse_position().x < global_position.x else false
