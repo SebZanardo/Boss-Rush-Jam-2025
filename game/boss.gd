@@ -23,6 +23,12 @@ func _ready() -> void:
 	set_state(States.IDLE)
 
 
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.pressed and event.button_index == 1:
+		print("try hurt")
+		try_hurt(10)
+
+
 func _physics_process(_delta: float) -> void:
 	target = get_viewport().get_mouse_position()
 	
@@ -61,9 +67,14 @@ func _physics_process(_delta: float) -> void:
 				set_state(States.IDLE)
 			
 		States.HURT:
-			pass
+			if timer.time_left <= 0:
+				if health <= 0:
+					set_state(States.DEATH)
+				else:
+					set_state(States.IDLE)
 			
 		States.DEATH:
+			# TODO: DESTROY!!!
 			pass
 
 
@@ -117,6 +128,10 @@ func set_state(new_state: States) -> void:
 			animator.play("dash stop")
 			
 		States.HURT:
+			velocity = Vector2.ZERO
+			timer.wait_time = 0.5
+			timer.start()
+			
 			animator.play("hurt")
 			
 		States.DEATH:
@@ -143,6 +158,18 @@ func decide_next_attack() -> void:
 		set_state(States.DASH_PREPARATION)
 
 
-# TODO: Change state to hurt if not invincible
+func try_hurt(amount: int) -> void:
+	# Do not damage boss if these states are active
+	if state == States.DASH_PREPARATION or state == States.DASH or state == States.DASH_STOP:
+		return
+	
+	if state == States.HURT or state == States.DEATH:
+		return
+	
+	health -= amount
+	set_state(States.HURT)
+
+
+# TODO: Call damage function based on collision shape
 func _on_collision_shape_2d_child_entered_tree(_node: Node) -> void:
 	pass
