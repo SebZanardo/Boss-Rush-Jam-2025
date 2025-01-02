@@ -6,12 +6,17 @@ var state: States = States.IDLE
 @onready var animator = $AnimatedSprite2D
 @onready var timer = $Timer
 
+# TODO: Change this to be the player
+@onready var target: Vector2 = get_viewport().get_mouse_position()
+
 @export var max_health: int = 100
 var health: int = max_health
 
-@export var speed: int = 60
+@export var walk_speed: int = 60
+@export var dash_speed: int = 200
 
-var target_position: Vector2 = Vector2.ZERO
+
+var target_move_position: Vector2 = Vector2.ZERO
 
 
 func _ready() -> void:
@@ -19,61 +24,125 @@ func _ready() -> void:
 
 
 func _physics_process(_delta: float) -> void:
+	target = get_viewport().get_mouse_position()
+	
+	# Flip sprite
+	if velocity.x > 0:
+		animator.flip_h = false
+	if velocity.x < 0:
+		animator.flip_h = true
+
 	match state:
 		States.IDLE:
 			if timer.time_left <= 0:
-				# TODO: Transition to WALK STATE if player is far away
-				# TODO: Transition to FIRE STATE if player is medium range
-				# TODO: Transition to DASH STATE if player is close
-				set_state(States.WALK)
-				print("walk")
+				decide_next_attack()
+				
 		States.WALK:
-			if target_position == Vector2.ZERO or position.distance_to(target_position) <= 5:
-				# Generate random target position inside of viewport to move to
-				var tx = randi_range(0, get_viewport_rect().size.x)
-				var ty = randi_range(0, get_viewport_rect().size.y)
-				target_position = Vector2(tx, ty)
-				velocity = position.direction_to(target_position) * speed
-				print("NEW POS", target_position)
+			# If within threshold to target_move_position
+			if position.distance_to(target_move_position) <= 5:
+				set_state(States.IDLE)
 			move_and_slide()
+			
 		States.FIRING:
-			pass
+			if timer.time_left <= 0:
+				set_state(States.IDLE)
+				
 		States.DASH_PREPARATION:
-			pass
+			if timer.time_left <= 0:
+				set_state(States.DASH)
+			
 		States.DASH:
-			pass
+			if position.distance_to(target_move_position) <= 5:
+				set_state(States.DASH_STOP)
+			move_and_slide()
+		
 		States.DASH_STOP:
-			pass
+			if timer.time_left <= 0:
+				set_state(States.IDLE)
+			
 		States.HURT:
 			pass
+			
 		States.DEATH:
 			pass
 
 
 func set_state(new_state: States) -> void:
-	# TODO: Perform specific logic to switch between states
+	# Perform specific logic to switch between states
 	match new_state:
 		States.IDLE:
-			timer.wait_time = 3
+			velocity = Vector2.ZERO
+			timer.wait_time = randi_range(1, 3)
 			timer.start()
+			
 			animator.play("idle")
+			
 		States.WALK:
+			# Generate random target position near target
+			var tx = randi_range(target.x - 100, target.x + 100)
+			var ty = randi_range(target.y - 100, target.y + 100)
+			target_move_position = Vector2(tx, ty)
+			velocity = position.direction_to(target_move_position) * walk_speed
+			
 			animator.play("walk")
+			
 		States.FIRING:
-			pass
+			velocity = Vector2.ZERO
+			timer.wait_time = 5
+			timer.start()
+			
+			animator.play("firing")
+			
 		States.DASH_PREPARATION:
+			velocity = Vector2.ZERO
+			timer.wait_time = 0.5
+			timer.start()
+			
 			animator.play("dash preparation")
+		
 		States.DASH:
+			# TODO: Predict future position based on player velocity
+			var tx = randi_range(target.x - 10, target.x + 10)
+			var ty = randi_range(target.y - 10, target.y + 10)
+			target_move_position = Vector2(tx, ty)
+			velocity = position.direction_to(target_move_position) * dash_speed
+			
 			animator.play("dash")
+		
 		States.DASH_STOP:
+			velocity = Vector2.ZERO
+			timer.wait_time = 0.5
+			timer.start()
+			
 			animator.play("dash stop")
+			
 		States.HURT:
 			animator.play("hurt")
+			
 		States.DEATH:
 			animator.play("death")
+			
 	state = new_state
+	print("ANIMATOR CHANGED TO: ", animator.animation)
+
+
+func decide_next_attack() -> void:
+	var distance = position.distance_to(target)
+	
+	# Transition to WALK STATE if player is far away
+	if distance > 150:
+		set_state(States.WALK)
+	elif distance > 75:
+		# Transition to DASH or FIRING state if player is close
+		var r = randi_range(0, 1)
+		if r == 0:
+			set_state(States.DASH_PREPARATION)
+		if r == 1:
+			set_state(States.FIRING)
+	else:
+		set_state(States.DASH_PREPARATION)
 
 
 # TODO: Change state to hurt if not invincible
-func _on_collision_shape_2d_child_entered_tree(node: Node) -> void:
+func _on_collision_shape_2d_child_entered_tree(_node: Node) -> void:
 	pass
