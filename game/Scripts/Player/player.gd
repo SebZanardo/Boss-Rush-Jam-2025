@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
-var max_speed : float = 200
-var acceleration : float = 3000
+var max_speed : float = 150
+var acceleration : float = 2500
 
 @export var cam_gradient : float = 1000
 @export var max_cam_offset : float = 64
@@ -39,9 +39,9 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 func _process(delta: float) -> void:
-	player_animator.flip_h = true if velocity.x < 0 else false
-	if get_dir() == Vector2.ZERO:
+	player_animator.flip_h = true if get_dir().x < 0 else false
+	if get_dir().x == 0:
 		player_animator.flip_h = true if get_global_mouse_position().x < global_position.x else false
 	
-	var mouseoffset = (get_viewport().get_mouse_position() - get_viewport_rect().size / 2)
-	camera.position = lerp(Vector2.ZERO, mouseoffset.normalized() * max_cam_offset, mouseoffset.length() / cam_gradient)
+	var mouse_offset = (get_viewport().get_mouse_position() - get_viewport_rect().size / 2)
+	camera.position = lerp(Vector2.ZERO, mouse_offset.normalized() * max_cam_offset, mouse_offset.length() / cam_gradient)
