@@ -15,8 +15,8 @@ func apply_friction(amount):
 	else:
 		velocity = Vector2.ZERO
 
-func apply_movement(acceleration):
-	velocity += acceleration
+func apply_movement(acc):
+	velocity += acc
 	velocity = velocity.limit_length(max_speed)
 
 func get_dir():
@@ -24,6 +24,12 @@ func get_dir():
 	axis.x = int(Input.is_action_pressed("move_right")) - int(Input.is_action_pressed("move_left"))
 	axis.y = int(Input.is_action_pressed("move_down")) - int(Input.is_action_pressed("move_up"))
 	return axis.normalized()
+	
+# NOTE: Temporary for testing projectile system
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.pressed and event.button_index == 1:
+		var direction = position.direction_to(get_viewport().get_mouse_position())
+		projectile_manager.spawn_projectile(projectile_manager.ProjectileType.BASIC, position, direction)
 
 func _physics_process(delta: float) -> void:
 	var dir = get_dir()
@@ -38,7 +44,7 @@ func _physics_process(delta: float) -> void:
 	
 	move_and_slide()
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	player_animator.flip_h = true if get_dir().x < 0 else false
 	if get_dir().x == 0:
 		player_animator.flip_h = true if get_global_mouse_position().x < global_position.x else false

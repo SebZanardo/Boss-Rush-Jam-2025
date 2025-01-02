@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://toufso4ixxpa"]
+
+[ext_resource type="Script" path="res://Scripts/projectile.gd" id="1_mx7sy"]
+
+[node name="projectile" type="Area2D"]
+script = ExtResource("1_mx7sy")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[connection signal="child_entered_tree" from="CollisionShape2D" to="." method="_on_collision_shape_2d_child_entered_tree"]

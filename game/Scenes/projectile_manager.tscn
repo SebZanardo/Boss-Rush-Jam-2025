@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://w6j2bhy687n3"]
+
+[node name="projectile_manager" type="Node"]
