@@ -15,6 +15,10 @@ run/main_scene="res://Scenes/main.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+projectile_manager="*res://Scripts/projectile_manager.gd"
+
 [display]
 
 window/size/viewport_width=640
