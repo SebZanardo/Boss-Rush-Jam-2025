@@ -1,19 +1,51 @@
-[gd_scene load_steps=5 format=3 uid="uid://qmow1xovt6bc"]
+[gd_scene load_steps=13 format=3 uid="uid://qmow1xovt6bc"]
 
 [ext_resource type="Script" path="res://Scripts/Player/player.gd" id="1_tkbhp"]
 [ext_resource type="Script" path="res://Scripts/Player/player_cam.gd" id="2_ql3ah"]
+[ext_resource type="Texture2D" uid="uid://5f4va4d2t47c" path="res://Sprites/Player/Placeholder/player_placeholder_idle1.png" id="2_v7ct0"]
+[ext_resource type="Texture2D" uid="uid://13vxqx2nhsdp" path="res://Sprites/Player/Placeholder/player_placeholder_idle2.png" id="3_c3wh3"]
+[ext_resource type="Texture2D" uid="uid://xanoxjln3h45" path="res://Sprites/Player/Placeholder/player_placeholder_idle3.png" id="4_6e4la"]
+[ext_resource type="Texture2D" uid="uid://cfv87u43gqxdi" path="res://Sprites/Player/Placeholder/player_placeholder_idle4.png" id="5_5nb46"]
+[ext_resource type="Texture2D" uid="uid://45yymay4abcc" path="res://Sprites/Player/Placeholder/player_placeholder_run1.png" id="6_oabbs"]
+[ext_resource type="Texture2D" uid="uid://dhws53oaw74a6" path="res://Sprites/Player/Placeholder/player_placeholder_run2.png" id="7_wbred"]
+[ext_resource type="Texture2D" uid="uid://cfphycplh0jfx" path="res://Sprites/Player/Placeholder/player_placeholder_run3.png" id="8_7j711"]
+[ext_resource type="Texture2D" uid="uid://bt6flujym1ios" path="res://Sprites/Player/Placeholder/player_placeholder_run4.png" id="9_itc12"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_4j1jg"]
 animations = [{
-"frames": [],
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_v7ct0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_c3wh3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_6e4la")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_5nb46")
+}],
 "loop": true,
 "name": &"idle",
-"speed": 5.0
+"speed": 8.0
 }, {
-"frames": [],
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_oabbs")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_wbred")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_7j711")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_itc12")
+}],
 "loop": true,
 "name": &"run",
-"speed": 5.0
+"speed": 8.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_o3kr1"]
