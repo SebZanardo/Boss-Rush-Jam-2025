@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://qmow1xovt6bc"]
+
+[ext_resource type="Script" path="res://Scripts/Player/player.gd" id="1_tkbhp"]
+[ext_resource type="Script" path="res://Scripts/Player/player_cam.gd" id="2_ql3ah"]
+[ext_resource type="SpriteFrames" uid="uid://dwyax0djl56rf" path="res://Resources/SpriteFrames/player.tres" id="2_t1au3"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_o3kr1"]
+radius = 5.0
+
+[node name="player" type="CharacterBody2D"]
+script = ExtResource("1_tkbhp")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = ExtResource("2_t1au3")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 3)
+shape = SubResource("CircleShape2D_o3kr1")
+
+[node name="player_cam" type="Camera2D" parent="."]
+script = ExtResource("2_ql3ah")
