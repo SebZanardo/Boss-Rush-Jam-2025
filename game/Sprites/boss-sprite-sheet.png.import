@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://rme2avq3uuk"
-path="res://.godot/imported/boss-sprite-sheet.png-c029175fe4cacdf26ebea18595780608.ctex"
+path="res://.godot/imported/boss-sprite-sheet.png-aaa362380d9c4b5552b6eb05b2562fa0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://boss-sprite-sheet.png"
-dest_files=["res://.godot/imported/boss-sprite-sheet.png-c029175fe4cacdf26ebea18595780608.ctex"]
+source_file="res://Sprites/boss-sprite-sheet.png"
+dest_files=["res://.godot/imported/boss-sprite-sheet.png-aaa362380d9c4b5552b6eb05b2562fa0.ctex"]
 
 [params]
 
