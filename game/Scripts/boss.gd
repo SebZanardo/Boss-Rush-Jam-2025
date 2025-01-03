@@ -1,5 +1,6 @@
 extends CharacterBody2D
 
+
 enum States {IDLE, WALK, FIRING, DASH_PREPARATION, DASH, DASH_STOP, HURT, DEATH}
 var state: States = States.IDLE
 
@@ -15,7 +16,6 @@ var health: int = max_health
 @export var walk_speed: int = 60
 @export var dash_speed: int = 200
 
-
 var target_move_position: Vector2 = Vector2.ZERO
 
 
@@ -23,6 +23,7 @@ func _ready() -> void:
 	set_state(States.IDLE)
 
 
+# NOTE: Temporary for testing
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed and event.button_index == 1:
 		print("try hurt")
@@ -168,8 +169,3 @@ func try_hurt(amount: int) -> void:
 	
 	health -= amount
 	set_state(States.HURT)
-
-
-# TODO: Call damage function based on collision shape
-func _on_collision_shape_2d_child_entered_tree(_node: Node) -> void:
-	pass

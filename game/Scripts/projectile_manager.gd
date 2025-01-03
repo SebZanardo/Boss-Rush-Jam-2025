@@ -54,8 +54,7 @@ func _physics_process(delta: float) -> void:
 		
 		# If projectile needs to be killed, keep the array packed!
 		if projectile.dead or projectile.time_alive > projectile.max_lifetime:
-			projectile.dead = true
-			projectile.visible = false
+			projectile.destroy()
 			
 			# Pack it up baby
 			# If last one just decrement
@@ -92,7 +91,7 @@ func init_projectile(projectile, type: ProjectileType, position: Vector2, veloci
 	projectile.animator.set_sprite_frames(spritesheet[type])
 	projectile.collision.set_shape(collision[type])
 	
-	projectile.visible = true
+	projectile.spawn()
 
 
 # This function should be called by player and boss and enemies :)
