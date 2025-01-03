@@ -1,12 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://lkvwuu5h5kqs"]
+[gd_scene load_steps=3 format=3 uid="uid://lkvwuu5h5kqs"]
 
-[ext_resource type="PackedScene" uid="uid://qmow1xovt6bc" path="res://Scenes/Player/player.tscn" id="1_4xdpk"]
 [ext_resource type="Texture2D" uid="uid://b081a0rmen73n" path="res://Sprites/Tiles/test.png" id="1_w2vee"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q5rtq"]
 size = Vector2(32, 32)
 
-[node name="player_playground" type="Node2D"]
+[node name="test_level" type="Node2D"]
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2(464, 200)
@@ -28,5 +27,22 @@ shape = SubResource("RectangleShape2D_q5rtq")
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D2"]
 texture = ExtResource("1_w2vee")
 
-[node name="player" parent="." instance=ExtResource("1_4xdpk")]
-position = Vector2(192, 144)
+[node name="StaticBody2D3" type="StaticBody2D" parent="."]
+position = Vector2(-190, 26)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D3"]
+shape = SubResource("RectangleShape2D_q5rtq")
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D3"]
+texture = ExtResource("1_w2vee")
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="."]
+position = Vector2(71, -188)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D4"]
+shape = SubResource("RectangleShape2D_q5rtq")
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D4"]
+texture = ExtResource("1_w2vee")

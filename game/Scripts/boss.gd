@@ -7,8 +7,8 @@ var state: States = States.IDLE
 @onready var animator = $AnimatedSprite2D
 @onready var timer = $Timer
 
-# TODO: Change this to be the player
-@onready var target: Vector2 = get_viewport().get_mouse_position()
+@export var player: CharacterBody2D
+var target: Vector2
 
 @export var max_health: int = 100
 var health: int = max_health
@@ -23,15 +23,8 @@ func _ready() -> void:
 	set_state(States.IDLE)
 
 
-# NOTE: Temporary for testing
-func _input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.pressed and event.button_index == 1:
-		print("try hurt")
-		try_hurt(10)
-
-
 func _physics_process(_delta: float) -> void:
-	target = get_viewport().get_mouse_position()
+	target = player.position
 	
 	# Flip sprite
 	if velocity.x > 0:
@@ -46,11 +39,17 @@ func _physics_process(_delta: float) -> void:
 				
 		States.WALK:
 			# If within threshold to target_move_position
-			if position.distance_to(target_move_position) <= 5:
+			if position.distance_to(target_move_position) <= 5 or timer.time_left <= 0:
 				set_state(States.IDLE)
 			move_and_slide()
 			
 		States.FIRING:
+			if int(timer.time_left * 20) % 3 == 0:
+				var tx = randi_range(int(target.x - 50), int(target.x + 50))
+				var ty = randi_range(int(target.y - 50), int(target.y + 50))
+				var target_shoot = Vector2(tx, ty)
+				var direction = position.direction_to(target_shoot)
+				projectile_manager.spawn_projectile(projectile_manager.ProjectileType.ENEMY_BASIC, position, direction)
 			if timer.time_left <= 0:
 				set_state(States.IDLE)
 				
@@ -59,7 +58,7 @@ func _physics_process(_delta: float) -> void:
 				set_state(States.DASH)
 			
 		States.DASH:
-			if position.distance_to(target_move_position) <= 5:
+			if position.distance_to(target_move_position) <= 5 or timer.time_left <= 0:
 				set_state(States.DASH_STOP)
 			move_and_slide()
 		
@@ -90,9 +89,11 @@ func set_state(new_state: States) -> void:
 			animator.play("idle")
 			
 		States.WALK:
+			timer.wait_time = 1.5
+			timer.start()
 			# Generate random target position near target
-			var tx = randi_range(target.x - 100, target.x + 100)
-			var ty = randi_range(target.y - 100, target.y + 100)
+			var tx = randi_range(int(target.x - 50), int(target.x + 50))
+			var ty = randi_range(int(target.y - 50), int(target.y + 50))
 			target_move_position = Vector2(tx, ty)
 			velocity = position.direction_to(target_move_position) * walk_speed
 			
@@ -113,10 +114,11 @@ func set_state(new_state: States) -> void:
 			animator.play("dash preparation")
 		
 		States.DASH:
+			timer.wait_time = 2
+			timer.start()
+			
 			# TODO: Predict future position based on player velocity
-			var tx = randi_range(target.x - 10, target.x + 10)
-			var ty = randi_range(target.y - 10, target.y + 10)
-			target_move_position = Vector2(tx, ty)
+			target_move_position = target
 			velocity = position.direction_to(target_move_position) * dash_speed
 			
 			animator.play("dash")
@@ -139,7 +141,7 @@ func set_state(new_state: States) -> void:
 			animator.play("death")
 			
 	state = new_state
-	print("ANIMATOR CHANGED TO: ", animator.animation)
+	print("BOSS STATE: ", animator.animation)
 
 
 func decide_next_attack() -> void:

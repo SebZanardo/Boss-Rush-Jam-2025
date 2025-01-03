@@ -22,16 +22,15 @@ func _on_body_entered(body: Node2D) -> void:
 		dead = true
 		# TODO Call player take damage function
 	elif body.is_in_group("enemy"):
-		# TODO: Return if type of projectile is an enemy projectile
+		if type == projectile_manager.ProjectileType.ENEMY_BASIC:
+			return
 		dead = true
-		# TODO Call boss take damage function
+		body.try_hurt(damage)
 	else:
 		dead = true
 
 
 func _on_timer_timeout() -> void:
-	print("DIE GODAMn it")
-	print(dead)
 	if dead:
 		visible = false
 

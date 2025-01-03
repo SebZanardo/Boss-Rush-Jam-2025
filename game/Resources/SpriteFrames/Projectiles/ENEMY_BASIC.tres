@@ -1,0 +1,44 @@
+[gd_resource type="SpriteFrames" load_steps=6 format=3 uid="uid://coym32mq2h6s3"]
+
+[ext_resource type="Texture2D" uid="uid://b8ukw4byaej13" path="res://Sprites/Projectiles/ENEMY_BASIC-sprite-sheet.png" id="1_oyeqb"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l0tlq"]
+atlas = ExtResource("1_oyeqb")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5apjj"]
+atlas = ExtResource("1_oyeqb")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_llhok"]
+atlas = ExtResource("1_oyeqb")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dqb83"]
+atlas = ExtResource("1_oyeqb")
+region = Rect2(64, 0, 32, 32)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l0tlq")
+}],
+"loop": false,
+"name": &"hit",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5apjj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_llhok")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dqb83")
+}],
+"loop": true,
+"name": &"move",
+"speed": 8.0
+}]

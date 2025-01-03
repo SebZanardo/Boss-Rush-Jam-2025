@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bpjlpyau5elw0"
-path="res://.godot/imported/BASIC-sprite-sheet.png-dfb56c55f99b8355de9286b137ea39e7.ctex"
+uid="uid://b8ukw4byaej13"
+path="res://.godot/imported/ENEMY_BASIC-sprite-sheet.png-7e4ba0079615e9b061758cd6e73aeb96.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Bullets/BASIC-sprite-sheet.png"
-dest_files=["res://.godot/imported/BASIC-sprite-sheet.png-dfb56c55f99b8355de9286b137ea39e7.ctex"]
+source_file="res://Sprites/Projectiles/ENEMY_BASIC-sprite-sheet.png"
+dest_files=["res://.godot/imported/ENEMY_BASIC-sprite-sheet.png-7e4ba0079615e9b061758cd6e73aeb96.ctex"]
 
 [params]
 

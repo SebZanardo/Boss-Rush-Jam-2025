@@ -1,35 +1,39 @@
 extends Node
 
 
-# NOTE: Please keep DEAD at start of enum definition
-enum ProjectileType {BASIC}
+enum ProjectileType {BASIC, ENEMY_BASIC}
 
 # TODO: Load all these for each projectile type into one dict with the key as a custom resource
 var max_lifetime : Dictionary = {
 	ProjectileType.BASIC : 2,
+	ProjectileType.ENEMY_BASIC : 5,
 }
 
 var damage : Dictionary = {
 	ProjectileType.BASIC : 3,
+	ProjectileType.ENEMY_BASIC : 5,
 }
 
 var speed : Dictionary = {
 	ProjectileType.BASIC : 200,
+	ProjectileType.ENEMY_BASIC : 300,
 }
 
 var spritesheet : Dictionary = {
 	ProjectileType.BASIC : preload("res://Resources/SpriteFrames/Projectiles/BASIC.tres"),
+	ProjectileType.ENEMY_BASIC : preload("res://Resources/SpriteFrames/Projectiles/ENEMY_BASIC.tres"),
 }
 
 var collision : Dictionary = {
 	ProjectileType.BASIC : preload("res://Resources/Collisions/Projectiles/BASIC.tres"),
+	ProjectileType.ENEMY_BASIC : preload("res://Resources/Collisions/Projectiles/ENEMY_BASIC.tres"),
 }
 
 
 var projectile_scene = preload("res://Scenes/projectile.tscn")
 
 var object_pool : Array
-@export var max_projectiles : int = 10
+@export var max_projectiles : int = 300
 var active_projectiles : int = 0
 
 
@@ -72,6 +76,8 @@ func _physics_process(delta: float) -> void:
 		match projectile.type:
 			ProjectileType.BASIC:
 				projectile.position += projectile.velocity * projectile.speed * delta
+			ProjectileType.ENEMY_BASIC:
+				projectile.position += projectile.velocity * projectile.speed * delta
 		
 		# No matter the projectile type add elasped time to time_alive
 		projectile.time_alive += delta
@@ -105,8 +111,3 @@ func spawn_projectile(type: ProjectileType, position: Vector2, velocity: Vector2
 	
 	active_projectiles += 1
 	
-	# NOTE: Temporary debugging
-	print(active_projectiles)
-	for p in object_pool:
-		print(p.dead, p.time_alive)
-	print()
