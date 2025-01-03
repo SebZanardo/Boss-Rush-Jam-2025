@@ -5,8 +5,8 @@ enum ProjectileType {BASIC, ENEMY_BASIC}
 
 # TODO: Load all these for each projectile type into one dict with the key as a custom resource
 var max_lifetime : Dictionary = {
-	ProjectileType.BASIC : 2,
-	ProjectileType.ENEMY_BASIC : 5,
+	ProjectileType.BASIC : 1,
+	ProjectileType.ENEMY_BASIC : 2,
 }
 
 var damage : Dictionary = {

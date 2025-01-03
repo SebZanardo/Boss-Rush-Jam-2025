@@ -50,6 +50,7 @@ func _physics_process(_delta: float) -> void:
 				var target_shoot = Vector2(tx, ty)
 				var direction = position.direction_to(target_shoot)
 				projectile_manager.spawn_projectile(projectile_manager.ProjectileType.ENEMY_BASIC, position, direction)
+				
 			if timer.time_left <= 0:
 				set_state(States.IDLE)
 				
@@ -64,11 +65,7 @@ func _physics_process(_delta: float) -> void:
 		
 		States.DASH_STOP:
 			if timer.time_left <= 0:
-				var r = randi_range(0, 3)
-				if r == 0:
-					set_state(States.DASH_PREPARATION)
-				else:
-					set_state(States.IDLE)
+				set_state(States.IDLE)
 			
 		States.HURT:
 			if timer.time_left <= 0:
