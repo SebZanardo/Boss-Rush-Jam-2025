@@ -10,7 +10,7 @@ var state: States = States.IDLE
 @export var player: CharacterBody2D
 var target: Vector2
 
-@export var max_health: int = 200
+@export var max_health: int = 100
 var health: int = max_health
 
 @export var walk_speed: int = 60
