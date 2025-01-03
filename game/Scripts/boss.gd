@@ -10,7 +10,7 @@ var state: States = States.IDLE
 @export var player: CharacterBody2D
 var target: Vector2
 
-@export var max_health: int = 100
+@export var max_health: int = 200
 var health: int = max_health
 
 @export var walk_speed: int = 60
@@ -64,14 +64,24 @@ func _physics_process(_delta: float) -> void:
 		
 		States.DASH_STOP:
 			if timer.time_left <= 0:
-				set_state(States.IDLE)
+				var r = randi_range(0, 3)
+				if r == 0:
+					set_state(States.DASH_PREPARATION)
+				else:
+					set_state(States.IDLE)
 			
 		States.HURT:
 			if timer.time_left <= 0:
 				if health <= 0:
 					set_state(States.DEATH)
 				else:
-					set_state(States.IDLE)
+					var r = randi_range(0, 5)
+					if r <= 2:
+						set_state(States.DASH_PREPARATION)
+					if r == 3:
+						set_state(States.FIRING)
+					else:
+						set_state(States.IDLE)
 			
 		States.DEATH:
 			# TODO: DESTROY!!!
@@ -83,7 +93,7 @@ func set_state(new_state: States) -> void:
 	match new_state:
 		States.IDLE:
 			velocity = Vector2.ZERO
-			timer.wait_time = randi_range(1, 3)
+			timer.wait_time = randf_range(0.5, 1.5)
 			timer.start()
 			
 			animator.play("idle")
@@ -163,7 +173,7 @@ func decide_next_attack() -> void:
 
 func try_hurt(amount: int) -> void:
 	# Do not damage boss if these states are active
-	if state == States.DASH_PREPARATION or state == States.DASH or state == States.DASH_STOP:
+	if state == States.DASH_PREPARATION or state == States.DASH or state == States.DASH_STOP or state == States.FIRING:
 		return
 	
 	if state == States.HURT or state == States.DEATH:
